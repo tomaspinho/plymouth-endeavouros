@@ -4,5 +4,5 @@ Description=A Plymouth theme for EndeavourOS based on the default Script theme
 ModuleName=script
 
 [script]
-ImageDir=/usr/share/plymouth/themes//endeavouros
-ScriptFile=/usr/share/plymouth/themes//script-endeavouros/endeavouros.script
+ImageDir=/usr/share/plymouth/themes/endeavouros
+ScriptFile=/usr/share/plymouth/themes/endeavouros/endeavouros.script
