@@ -1,17 +1,28 @@
 # This is an example plymouth plugin script
 
-Window.SetBackgroundTopColor(0.234, 0.43, 0.705);
-Window.SetBackgroundBottomColor(0.16, 0.25, 0.44);
+Window.SetBackgroundTopColor(0, 0, 0);
+Window.SetBackgroundBottomColor(0, 0, 0);
 
+/*
 logo.image = Image("endeavouros-dark.png");
 logo.sprite = Sprite(logo.image);
 logo.opacity_angle = 0;
+*/
+
+background.image = Image("wallpaper.png");
+background.aspect_ratio = background.image.GetWidth() / background.image.GetHeight();
+background.window_ratio = Window.GetWidth() / background.image.GetWidth();
+background.image = background.image.Scale(Window.GetWidth(), background.image.GetHeight() * background.window_ratio);
+background.sprite = Sprite(background.image);
+background.sprite.SetX (Window.GetX());
+background.sprite.SetY (Window.GetY() + (Window.GetHeight()-background.image.GetHeight()) / 2);
 
 caps_sprite = Sprite();
 caps_sprite.SetPosition(10, 10, 10000);
 
 fun refresh_callback ()
   {
+    /*
     logo.opacity_angle += ((2 * 3.14) / 50) * 0.5;  # 0.5 HZ
     min_opacity = 0.3;
     opacity = (Math.Cos(logo.opacity_angle) + 1) / 2;
@@ -20,6 +31,7 @@ fun refresh_callback ()
     logo.sprite.SetX (Window.GetX() + Window.GetWidth()  / 2 - logo.image.GetWidth()  / 2);
     logo.sprite.SetY (Window.GetY() + Window.GetHeight() / 2 - logo.image.GetHeight() / 2);
     logo.sprite.SetOpacity (opacity);
+    */
 
     caps_state = Plymouth.GetCapslockState();
     if (caps_state) {
@@ -52,7 +64,7 @@ fun dialog_setup(message)
     box.image = Image("box.png");
     lock.image = Image("lock.png");
     entry.image = Image("entry.png");
-    prompt.image = Image.Text (message + " " + Plymouth.GetCapslockState(), 1, 1, 1);
+    prompt.image = Image.Text (message, 1, 1, 1);
 
     prompt.sprite = Sprite(prompt.image);
     prompt.x = Window.GetX() + Window.GetWidth()  / 2 - prompt.image.GetWidth ()/2;
