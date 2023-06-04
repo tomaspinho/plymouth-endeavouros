@@ -130,7 +130,7 @@ fun display_password_callback (prompt, bullets)
 	dialog_opacity(1);
     for (index = 0; dialog.bullet[index] || index < bullets; index++)
       {
-        if (!dialog.bullet[index])
+        if (!dialog.bullet[index] && index < 22)
           {
             dialog.bullet[index].sprite = Sprite(dialog.bullet_image);
             dialog.bullet[index].x = dialog.entry.x + 4 + index * (dialog.bullet_image.GetWidth() + 2);
