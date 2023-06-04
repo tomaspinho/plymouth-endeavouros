@@ -39,17 +39,12 @@ fun refresh_callback ()
     */
 
     caps_state = Plymouth.GetCapslockState();
-    if (caps_state) {
-      my_image = Image.Text("Your Caps Lock is On", 1, 1, 1);
-      caps_sprite.SetImage(my_image);
-
-      x = Window.GetX() + Window.GetWidth()  / 2 - my_image.GetWidth ()/2;
-      y = Window.GetY() + Window.GetHeight() - my_image.GetHeight();
-
-      caps_sprite.SetPosition(x, y, 10000);
-      caps_sprite.SetOpacity(1);
-    } else {
-      caps_sprite.SetOpacity(0);
+    if (global.dialog) { //&& global.dialog.capslock_icon && global.dialog.capslock_icon.sprite) {
+      if (caps_state) {
+        global.dialog.capslock_icon.sprite.SetOpacity (1);
+      } else {
+        global.dialog.capslock_icon.sprite.SetOpacity (0);
+      }
     }
   }
   
@@ -63,10 +58,12 @@ fun dialog_setup(message)
     local.box;
     local.entry;
     local.prompt;
+    local.capslock_icon;
 
     box.image = Image("box.png");
     entry.image = Image("entry.png");
     prompt.image = Image.Text (message, 1, 1, 1);
+    capslock_icon.image = Image("capslock-icon.png");
 
     prompt.sprite = Sprite(prompt.image);
     prompt.x = Window.GetX() + Window.GetWidth()  / 2 - prompt.image.GetWidth ()/2;
@@ -86,11 +83,19 @@ fun dialog_setup(message)
     entry.z = box.z + 1;
     entry.sprite.SetPosition(entry.x, entry.y, entry.z);
 
+    capslock_icon.sprite = Sprite(capslock_icon.image);
+    capslock_icon.x = entry.x + entry.image.GetWidth() - capslock_icon.image.GetWidth() - 8;
+    capslock_icon.y = entry.y + (entry.image.GetHeight() - capslock_icon.image.GetHeight())/2;
+    capslock_icon.z = entry.z;
+    capslock_icon.sprite.SetPosition(capslock_icon.x, capslock_icon.y, capslock_icon.z);
+    capslock_icon.sprite.SetOpacity(0);
+
     // Get the progress percentage out of the way
     set_progress_position();
 
     global.dialog.box = box;
     global.dialog.entry = entry;
+    global.dialog.capslock_icon = capslock_icon;
     global.dialog.prompt = prompt;
     global.dialog.bullet_image = Image("bullet.png");
     dialog_opacity (1);
@@ -112,8 +117,8 @@ fun display_normal_callback ()
     global.status = "normal";
     if (global.dialog)
       dialog_opacity (0);
-      // Move the progress percentage back to the centre
-      set_progress_position();
+    // Move the progress percentage back to the centre
+    set_progress_position();
   }
 
 fun display_password_callback (prompt, bullets)
