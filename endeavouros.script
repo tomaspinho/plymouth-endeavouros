@@ -214,13 +214,5 @@ fun hide_message_callback (text)
   message_sprite.SetPosition(10, 10, 10000);
 }
 
-fun keyboard_callback(key) {
-  my_image = Image.Text(Plymouth.GetCapslockState(), 1, 1, 1);
-  message_sprite.SetImage(my_image);
-  message_sprite.SetPosition(10, 10, 10000);
-  message_sprite.SetOpacity(1);
-}
-
 Plymouth.SetDisplayMessageFunction (display_message_callback);
 Plymouth.SetHideMessageFunction (hide_message_callback);
-Plymouth.SetKeyboardInputFunction (keyboard_callback);
