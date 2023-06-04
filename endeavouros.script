@@ -67,7 +67,7 @@ fun dialog_setup(message)
 
     prompt.sprite = Sprite(prompt.image);
     prompt.x = Window.GetX() + Window.GetWidth()  / 2 - prompt.image.GetWidth ()/2;
-    prompt.y = Window.GetY() + Window.GetHeight() * (5/6) - prompt.image.GetHeight() - 4;
+    prompt.y = Window.GetY() + Window.GetHeight() * (5/6) - prompt.image.GetHeight() - 8;
     prompt.z = 10000;
     prompt.sprite.SetPosition(prompt.x, prompt.y, prompt.z);
 
