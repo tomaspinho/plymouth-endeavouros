@@ -61,12 +61,10 @@ status = "normal";
 box;
 fun dialog_setup(message)
   {
-    local.lock;
     local.entry;
     local.prompt;
 
     box.image = Image("box.png");
-    lock.image = Image("lock.png");
     entry.image = Image("entry.png");
     prompt.image = Image.Text (message, 1, 1, 1);
 
@@ -82,14 +80,8 @@ fun dialog_setup(message)
     box.z = 10000;
     box.sprite.SetPosition(box.x, box.y, box.z);
     
-    lock.sprite = Sprite(lock.image);
-    lock.x = box.x + box.image.GetWidth()/2 - (lock.image.GetWidth() + entry.image.GetWidth()) / 2;
-    lock.y = box.y + box.image.GetHeight()/2 - lock.image.GetHeight()/2;
-    lock.z = box.z + 1;
-    lock.sprite.SetPosition(lock.x, lock.y, lock.z);
-    
     entry.sprite = Sprite(entry.image);
-    entry.x = lock.x + lock.image.GetWidth();
+    entry.x = box.x + box.image.GetWidth()/2 - entry.image.GetWidth() / 2;
     entry.y = box.y + box.image.GetHeight()/2 - entry.image.GetHeight()/2;
     entry.z = box.z + 1;
     entry.sprite.SetPosition(entry.x, entry.y, entry.z);
@@ -98,7 +90,6 @@ fun dialog_setup(message)
     set_progress_position();
 
     global.dialog.box = box;
-    global.dialog.lock = lock;
     global.dialog.entry = entry;
     global.dialog.prompt = prompt;
     global.dialog.bullet_image = Image("bullet.png");
@@ -108,7 +99,6 @@ fun dialog_setup(message)
 fun dialog_opacity(opacity)
   {
     dialog.box.sprite.SetOpacity (opacity);
-    dialog.lock.sprite.SetOpacity (opacity);
     dialog.entry.sprite.SetOpacity (opacity);
     dialog.prompt.sprite.SetOpacity (opacity);
     for (index = 0; dialog.bullet[index]; index++)
