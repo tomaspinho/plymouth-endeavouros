@@ -215,7 +215,7 @@ Plymouth.SetBootProgressFunction(progress_callback);
 fun set_progress_position()
   {
     if (global.status == "password")
-      progress_text.sprite.SetPosition(Window.GetX() + Window.GetWidth() / 2 + dialog.box.image.GetWidth () / 2 + 80 - progress_text.image.GetWidth(), Window.GetY() + Window.GetHeight() * 5/6 + dialog.box.image.GetHeight()/2 - progress_text.image.GetHeight()/2, 1);
+      progress_text.sprite.SetPosition(Window.GetX() + Window.GetWidth() / 2 + dialog.box.image.GetWidth () / 2 + 84 - progress_text.image.GetWidth(), Window.GetY() + Window.GetHeight() * 5/6 + dialog.box.image.GetHeight()/2 - progress_text.image.GetHeight()/2, 1);
     else
       progress_text.sprite.SetPosition(Window.GetX() + Window.GetWidth()  / 2 - progress_text.image.GetWidth() /2, Window.GetY() + Window.GetHeight() * 5/6, 1);
   }
