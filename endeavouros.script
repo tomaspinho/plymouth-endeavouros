@@ -14,7 +14,7 @@ text_color.r = 127/255;
 text_color.g = 127/255;
 text_color.b = 255/255;
 
-max_prompt_message_width = 20;
+max_prompt_message_width = 40;
 
 background.image = Image("wallpaper.png");
 background.aspect_ratio = background.image.GetWidth() / background.image.GetHeight();
@@ -67,21 +67,30 @@ fun dialog_setup(message)
 
     cur_message = "";
     cur_index = 0;
-    for (index = 0; String(message).Length(); index++)
+    for (index = 0; index < String(message).Length(); index++)
       {
-        cur_message = cur_message + message[index];
-        if (cur_index == max_prompt_message_width) {
+        cur_message = cur_message + String(message).CharAt(index);
+        if (String(cur_message).Length() == max_prompt_message_width) {
           prompt[cur_index].image = Image.Text (cur_message, 1, 1, 1);
 
           prompt[cur_index].sprite = Sprite(prompt[cur_index].image);
-          prompt[cur_index].x = Window.GetX() + Window.GetWidth()  / 2 - prompt[cur_index].image.GetWidth ()/2;
-          prompt[cur_index].y = Window.GetY() + Window.GetHeight() * (5/6) - (cur_index + 1)*prompt[cur_index].image.GetHeight() - 8;
-          prompt[cur_index].z = 10000;
-          prompt[cur_index].sprite.SetPosition(prompt[cur_index].x, prompt[cur_index].y, prompt[cur_index].z);
 
           cur_message = "";
           cur_index++;
         }
+      }
+
+    // Get the remainder string
+    prompt[cur_index].image = Image.Text (cur_message, 1, 1, 1);
+    prompt[cur_index].sprite = Sprite(prompt[cur_index].image);
+    cur_index++;
+
+    for (index = 0; prompt[index]; index++)
+      {
+        prompt[index].x = Window.GetX() + Window.GetWidth()  / 2 - prompt[index].image.GetWidth ()/2;
+        prompt[index].y = Window.GetY() + Window.GetHeight() * (5/6) - (cur_index - index)*prompt[index].image.GetHeight() - 8;
+        prompt[index].z = 10000;
+        prompt[index].sprite.SetPosition(prompt[index].x, prompt[index].y, prompt[index].z);
       }
 
     capslock_icon.image = Image("capslock-icon.png");
