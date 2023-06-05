@@ -14,6 +14,8 @@ text_color.r = 127/255;
 text_color.g = 127/255;
 text_color.b = 255/255;
 
+max_prompt_message_width = 20;
+
 background.image = Image("wallpaper.png");
 background.aspect_ratio = background.image.GetWidth() / background.image.GetHeight();
 background.window_ratio = Window.GetWidth() / background.image.GetWidth();
@@ -62,14 +64,27 @@ fun dialog_setup(message)
 
     box.image = Image("box.png");
     entry.image = Image("entry.png");
-    prompt.image = Image.Text (message, 1, 1, 1);
-    capslock_icon.image = Image("capslock-icon.png");
 
-    prompt.sprite = Sprite(prompt.image);
-    prompt.x = Window.GetX() + Window.GetWidth()  / 2 - prompt.image.GetWidth ()/2;
-    prompt.y = Window.GetY() + Window.GetHeight() * (5/6) - prompt.image.GetHeight() - 8;
-    prompt.z = 10000;
-    prompt.sprite.SetPosition(prompt.x, prompt.y, prompt.z);
+    cur_message = "";
+    cur_index = 0;
+    for (index = 0; String(message).Length(); index++)
+      {
+        cur_message = cur_message + message[index];
+        if (cur_index == max_prompt_message_width) {
+          prompt[cur_index].image = Image.Text (cur_message, 1, 1, 1);
+
+          prompt[cur_index].sprite = Sprite(prompt[cur_index].image);
+          prompt[cur_index].x = Window.GetX() + Window.GetWidth()  / 2 - prompt[cur_index].image.GetWidth ()/2;
+          prompt[cur_index].y = Window.GetY() + Window.GetHeight() * (5/6) - (cur_index + 1)*prompt[cur_index].image.GetHeight() - 8;
+          prompt[cur_index].z = 10000;
+          prompt[cur_index].sprite.SetPosition(prompt[cur_index].x, prompt[cur_index].y, prompt[cur_index].z);
+
+          cur_message = "";
+          cur_index++;
+        }
+      }
+
+    capslock_icon.image = Image("capslock-icon.png");
 
     box.sprite = Sprite(box.image);
     box.x = Window.GetX() + Window.GetWidth()  / 2 - box.image.GetWidth ()/2;
@@ -105,7 +120,10 @@ fun dialog_opacity(opacity)
   {
     dialog.box.sprite.SetOpacity (opacity);
     dialog.entry.sprite.SetOpacity (opacity);
-    dialog.prompt.sprite.SetOpacity (opacity);
+    for (index = 0; dialog.prompt[index]; index++)
+      {
+        dialog.prompt[index].sprite.SetOpacity(opacity);
+      }
     for (index = 0; dialog.bullet[index]; index++)
       {
         dialog.bullet[index].sprite.SetOpacity(opacity);
