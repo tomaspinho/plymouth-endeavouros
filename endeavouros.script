@@ -3,12 +3,6 @@
 Window.SetBackgroundTopColor(0, 0, 0);
 Window.SetBackgroundBottomColor(0, 0, 0);
 
-/*
-logo.image = Image("endeavouros-dark.png");
-logo.sprite = Sprite(logo.image);
-logo.opacity_angle = 0;
-*/
-
 // EndeavourOS color #7f7fff = rgb(127, 127, 255)
 text_color.r = 127/255;
 text_color.g = 127/255;
@@ -29,17 +23,6 @@ caps_sprite.SetPosition(10, 10, 10000);
 
 fun refresh_callback ()
   {
-    /*
-    logo.opacity_angle += ((2 * 3.14) / 50) * 0.5;  # 0.5 HZ
-    min_opacity = 0.3;
-    opacity = (Math.Cos(logo.opacity_angle) + 1) / 2;
-    opacity *= 1 - min_opacity;
-    opacity += min_opacity;
-    logo.sprite.SetX (Window.GetX() + Window.GetWidth()  / 2 - logo.image.GetWidth()  / 2);
-    logo.sprite.SetY (Window.GetY() + Window.GetHeight() / 2 - logo.image.GetHeight() / 2);
-    logo.sprite.SetOpacity (opacity);
-    */
-
     caps_state = Plymouth.GetCapslockState();
     if (global.dialog) { //&& global.dialog.capslock_icon && global.dialog.capslock_icon.sprite) {
       if (caps_state) {
@@ -175,23 +158,7 @@ fun display_password_callback (prompt, bullets)
 Plymouth.SetDisplayNormalFunction(display_normal_callback);
 Plymouth.SetDisplayPasswordFunction(display_password_callback);
 
-#----------------------------------------- Progress Bar --------------------------------
-
-/*
-progress_box.image = Image("progress_box.png");
-progress_box.sprite = Sprite(progress_box.image);
-
-progress_box.x = Window.GetX() + Window.GetWidth() / 2 - progress_box.image.GetWidth() / 2;
-progress_box.y = Window.GetY() + Window.GetHeight() * 0.75 - progress_box.image.GetHeight() / 2;
-progress_box.sprite.SetPosition(progress_box.x, progress_box.y, 0);
-
-progress_bar.original_image = Image("progress_bar.png");
-progress_bar.sprite = Sprite();
-
-progress_bar.x = Window.GetX() + Window.GetWidth()  / 2 -        progress_bar.original_image.GetWidth() / 2;
-progress_bar.y = Window.GetY() + Window.GetHeight() / 2 * 1.5  - progress_box.image.GetHeight() / 2 + (progress_box.image.GetHeight() - progress_bar.original_image.GetHeight()) / 2;
-progress_bar.sprite.SetPosition(progress_bar.x, progress_bar.y, 1);
-*/
+#----------------------------------------- Progress Percentage --------------------------------
 
 progress_text.sprite = Sprite();
 
