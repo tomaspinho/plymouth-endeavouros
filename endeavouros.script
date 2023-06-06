@@ -8,6 +8,11 @@ text_color.r = 127/255;
 text_color.g = 127/255;
 text_color.b = 255/255;
 
+// Placeholder text color #adadad = rgb(173, 173, 173)
+placeholder_text_color.r = 127/255;
+placeholder_text_color.g = 127/255;
+placeholder_text_color.b = 127/255;
+
 max_prompt_message_width = 40;
 
 background.image = Image("wallpaper.png");
@@ -42,11 +47,13 @@ fun dialog_setup(message)
   {
     local.box;
     local.entry;
+    local.entry_placeholder;
     local.prompt;
     local.capslock_icon;
 
     box.image = Image("box.png");
     entry.image = Image("entry.png");
+    entry_placeholder.image = Image.Text("Password", placeholder_text_color.r, placeholder_text_color.g, placeholder_text_color.b, 1, "Sans 18");
 
     cur_message = "";
     cur_index = 0;
@@ -90,6 +97,12 @@ fun dialog_setup(message)
     entry.z = box.z + 1;
     entry.sprite.SetPosition(entry.x, entry.y, entry.z);
 
+    entry_placeholder.sprite = Sprite(entry_placeholder.image);
+    entry_placeholder.x = entry.x + 4;
+    entry_placeholder.y = entry.y + (entry.image.GetHeight() - entry_placeholder.image.GetHeight())/2;
+    entry_placeholder.z = entry.z + 1;
+    entry_placeholder.sprite.SetPosition(entry_placeholder.x, entry_placeholder.y, entry_placeholder.z);
+
     capslock_icon.sprite = Sprite(capslock_icon.image);
     capslock_icon.x = entry.x + entry.image.GetWidth() - capslock_icon.image.GetWidth() - 8;
     capslock_icon.y = entry.y + (entry.image.GetHeight() - capslock_icon.image.GetHeight())/2;
@@ -102,6 +115,7 @@ fun dialog_setup(message)
 
     global.dialog.box = box;
     global.dialog.entry = entry;
+    global.dialog.entry_placeholder = entry_placeholder;
     global.dialog.capslock_icon = capslock_icon;
     global.dialog.prompt = prompt;
     global.dialog.bullet_image = Image("bullet.png");
@@ -112,6 +126,7 @@ fun dialog_opacity(opacity)
   {
     dialog.box.sprite.SetOpacity (opacity);
     dialog.entry.sprite.SetOpacity (opacity);
+    dialog.entry_placeholder.sprite.SetOpacity (opacity);
     for (index = 0; dialog.prompt[index]; index++)
       {
         dialog.prompt[index].sprite.SetOpacity(opacity);
@@ -153,6 +168,12 @@ fun display_password_callback (prompt, bullets)
         else
           dialog.bullet[index].sprite.SetOpacity(0);
       }
+
+    if (bullets > 0) {
+      global.dialog.entry_placeholder.sprite.SetOpacity(0);
+    } else {
+      global.dialog.entry_placeholder.sprite.SetOpacity(1);
+    }
   }
 
 Plymouth.SetDisplayNormalFunction(display_normal_callback);
